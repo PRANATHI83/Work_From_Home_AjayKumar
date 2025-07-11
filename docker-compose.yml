@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: ajay_work_from_home_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin234
+      POSTGRES_DB: new_employee_db
+    ports:
+      - "5464:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build: ./Backend
+    container_name: ajay_work_from_home_backend
+    depends_on:
+      - postgres
+    ports:
+      - "3066:3066"
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: admin834
+      DB_NAME: new_employee_db
+      DB_HOST: postgres
+      DB_PORT: 5432
+      FRONTEND_URL: http://52.66.64.235:8081
+    volumes:
+      - ./Backend:/app
+    working_dir: /app
+    command: node server.js
+
+  frontend:
+    build: ./Frontend
+    container_name: ajay_work_from_home_frontend
+    ports:
+      - "8081:80"
+    volumes:
+      - ./Frontend:/usr/share/nginx/html
+
+  hr_page:
+    build: ./HR_page
+    container_name: ajay_work_from_home_hr_page
+    ports:
+      - "8082:80"
+    volumes:
+      - ./HR_page:/usr/share/nginx/html
+
+volumes:
+  postgres_data:
+
