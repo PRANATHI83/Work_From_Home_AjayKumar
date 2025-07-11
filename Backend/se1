@@ -4,14 +4,14 @@ const { Pool } = require('pg');
 const path = require('path');
 const cors = require('cors');
 const app = express();
-const port = process.env.PORT || 3066;
+const port = process.env.PORT || 3015;
 
 // PostgreSQL connection
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
   host: process.env.DB_HOST || 'postgres',
   database: process.env.DB_NAME || 'new_employee_db',
-  password: process.env.DB_PASSWORD || 'admin834',
+  password: process.env.DB_PASSWORD || 'admin234',
   port: process.env.DB_PORT || 5432,
 });
 
@@ -19,14 +19,14 @@ const pool = new Pool({
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
-    "http://52.66.64.235:3066",
+    "http://43.204.100.237:3015",
     "http://127.0.0.1:5500",
-    "http://52.66.64.235:5500",
+    "http://43.204.100.237:5500",
     "http://127.0.0.1:5501",
     "http://127.0.0.1:5503", // Added to allow requests from this origin
-    "http://52.66.64.235:5503", // Added to allow requests from this origin
-    "http://52.66.64.235:8081",
-    "http://52.66.64.235:8082"
+    "http://43.204.100.237:5503", // Added to allow requests from this origin
+    "http://43.204.100.237:8010",
+    "http://43.204.100.237:8012"
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -202,5 +202,5 @@ app.get('/hr', (req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server running on http://52.66.64.235:${port}`);
+  console.log(`Server running on http://43.204.100.237:${port}`);
 });
